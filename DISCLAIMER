@@ -2,32 +2,22 @@
 
 Please read this disclaimer carefully before using or replicating this Arduino project.
 
-1. <u>Use at Your Own Risk:</u>
-
+1. Use at Your Own Risk:
    The Arduino project provided in this repository is intended for educational and experimental purposes only. While the utmost care has been taken to ensure its accuracy and safety, there is no guarantee that it is free from errors or defects. By using or replicating this project, you acknowledge and accept that you do so at your own risk.
 
-
-2. <u>Experience Required:</u>
-
+2. Experience Required:
    This Arduino project involves working with plumbing and electricity. It is essential to have prior experience and expertise in both areas before attempting to implement this project. You should have a thorough understanding of plumbing systems and electrical connections to ensure proper installation and avoid any potential hazards.
 
-
-3. <u>Electrical Safety Precautions:</u>
-
+3. Electrical Safety Precautions:
    When working with electricity, it is crucial to exercise extreme caution. Ensure that you have a clear understanding of electrical safety guidelines, such as proper grounding, insulation, and the use of appropriate safety equipment. Mishandling electrical components can lead to electrical shocks, fires, or other hazards. The project's author(s) shall not be liable for any damages or injuries resulting from the improper handling of electricity.
 
-4. <u>Plumbing Safety Precautions:</u>
-
+4. Plumbing Safety Precautions:
    The implementation of this project involves cutting water tubes and working with plumbing systems. It is essential to have experience and knowledge in plumbing techniques to ensure proper installation and prevent leaks, water damage, or other plumbing-related issues. The project's author(s) shall not be liable for any damages or injuries resulting from improper plumbing installation or handling.
 
-
-5. <u>Compliance with Laws and Regulations:</u>
-
+5. Compliance with Laws and Regulations:
    The user of this Arduino project is solely responsible for ensuring compliance with all applicable laws, regulations, and safety standards related to plumbing and electrical work. It is your responsibility to understand and adhere to any legal or regulatory requirements associated with the use or replication of this project.
 
-
-6. <u>Modifications and Redistribution:</u>
-
+6. Modifications and Redistribution:
    You are free to modify and adapt this Arduino project, provided that you comply with the license terms specified within the project's repository. The project's author(s) shall not be held liable for any modifications made by third parties.
 
 By using or replicating this Arduino project, you agree to the terms and conditions outlined in this disclaimer. If you do not agree with any of these terms, please refrain from using or replicating the project.

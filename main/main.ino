@@ -26,12 +26,12 @@
 const double SENSOR_CALIBRATION_FACTOR = 11.0;
 
 // time lenght transitions between states
-const unsigned long MAX_WATER_TIME = 270;     // maximum time allowed for the water to be running, in seconds
+const unsigned long MAX_WATER_TIME  = 270;    // maximum time allowed for the water to be running, in seconds
 const unsigned long MAX_BATH_LENGTH = 450;    // maximum time allowed for the bath, in seconds
-const unsigned long WARN_TIME = 30;           // time (until end of bath start) to warn end of bath, in seconds
-const unsigned long RECOVERY_TIME = 5;        // time of recovery mode, in minutes
+const unsigned long WARN_TIME       = 30;     // time (until end of bath) to warn end of bath (led and buzzer blinking), in seconds
+const unsigned long RECOVERY_TIME   = 5;      // time of recovery mode, in minutes
 const unsigned long TRANSITION_TIME = 30;     // time to transition from IDLE mode to BATH mode, in seconds
-const double        FLOW_THRESHOLD = 0.0;     // flow-rate threshold to trigger transition to BATH states
+const double        FLOW_THRESHOLD  = 0.0;    // flow-rate threshold to trigger transition to BATH states
 
 // ################################################################################################
 // ################################### END OF USER DEFINITIONS ####################################
@@ -66,6 +66,7 @@ unsigned long bath_time_counter {0};   // variable to count time taken by the cu
 unsigned long soap_time {0};           // store time stamps for soap time logic
 unsigned long state_time {0};          // variable used to store state timetags
 unsigned long rollover_time{0};        // store timestamp in loop() function and check for rollover
+unsigned long timer_time {0};          // store timestamp when timer is activated
 
 /*flash() function is called when timer interrupt is triggered*/
 void flash()
@@ -202,17 +203,20 @@ void loopBath()
         water_on = true;
         timer_on = false;
         soap_time = state_time;
+        timer_time = 0.0;
   	}
 
     // check if we are getting close to end of bath -> enable timer if true
     if (!timer_on && (millis() - state_time > (MAX_BATH_LENGTH * SEC2MILLIS - WARN_TIME * SEC2MILLIS)))
     {
          timer_on = true;
+         timer_time = millis();
          enableTimer();
     }
     if (!timer_on && water_on && (millis() - soap_time + bath_time_counter  > (MAX_WATER_TIME * SEC2MILLIS - WARN_TIME * SEC2MILLIS)))
     {
         timer_on = true;
+        timer_time = millis();
         enableTimer();
     }
 
@@ -232,11 +236,20 @@ void loopBath()
     if (millis() - state_time > MAX_BATH_LENGTH * SEC2MILLIS)
     {
         stateTransition();
+        return;
     }
 
     if (water_on && (millis() - soap_time + bath_time_counter  > MAX_WATER_TIME * SEC2MILLIS))
     {
         stateTransition();
+        return;
+    }
+
+    // new condition -> when timer is activated, only wait WARN_TIME to transition state
+    if (timer_on && millis() - timer_time > WARN_TIME * SEC2MILLIS)
+    {
+        stateTransition();
+        return;
     }
 }
 
@@ -276,6 +289,8 @@ void loop()
     if (rollover_time > millis())
     {
         // if we get here, then millis() has reset!
+        // the safe thing to do is to restart the program by going to IDLE mode
+        // (to properly update all time tags)
         state = State::RECOVERY;
         stateTransition();
     }
